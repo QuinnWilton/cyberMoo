@@ -13,6 +13,7 @@ public class CommandHandler {
         commands.put("who", new CommandWho());
         commands.put("nick", new CommandNick());
         commands.put("say", new CommandSay());
+        commands.put("register", new CommandRegister());
     }
 
     public void parse(String text, ThreadedClient source) {
