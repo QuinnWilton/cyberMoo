@@ -12,16 +12,17 @@ public class ThreadedClient extends Thread {
     private Socket socket;
     private PrintWriter outputStream;
     private BufferedReader inputStream;
-    private String nickname;
+    private Player player;
 
     public ThreadedClient(Socket socket) {
-        super("ServerThread");
+        super("ClientThread - " + socket.getInetAddress().getHostName());
         setServer(Server.getInstance());
         setSocket(socket);
-        setNickname(getSocket().getInetAddress().getHostName());
+        setPlayer(new Player());
+        getPlayer().setName(getSocket().getInetAddress().getHostName());
         try {
             setOutputStream(new PrintWriter(socket.getOutputStream(), true));
-            setInputStream(new BufferedReader(new InputStreamReader(getSocket().getInputStream())));
+            setInputStream(new BufferedReader(new InputStreamReader(getSocket().getInputStream(), "UTF-8")));
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(-1);
@@ -31,7 +32,6 @@ public class ThreadedClient extends Thread {
     @Override
     public void run() {
         try {
-            getServer().sendAll(getNickname() + " has connected!");
             String inputLine;
             while ((inputLine = getInputStream().readLine()) != null) {
                 getServer().getCommandHandler().parse(inputLine, this);
@@ -39,7 +39,6 @@ public class ThreadedClient extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            getServer().sendAll(getNickname() + " has disconnected!");
             getOutputStream().close();
         }
     }
@@ -91,20 +90,6 @@ public class ThreadedClient extends Thread {
     }
 
     /**
-     * @return the nickname
-     */
-    public String getNickname() {
-        return nickname;
-    }
-
-    /**
-     * @param nickname the nickname to set
-     */
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    /**
      * @return the server
      */
     public Server getServer() {
@@ -116,5 +101,19 @@ public class ThreadedClient extends Thread {
      */
     public void setServer(Server server) {
         this.server = server;
+    }
+
+    /**
+     * @return the player
+     */
+    public Player getPlayer() {
+        return player;
+    }
+
+    /**
+     * @param player the player to set
+     */
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }
