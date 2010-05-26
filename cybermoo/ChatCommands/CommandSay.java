@@ -14,5 +14,7 @@ public class CommandSay implements Command {
         String message = temp.trim();
         Server.getInstance().sendAll(source.getPlayer().getName() + " says \"" + message + "\"");
     }
-
+    public Boolean isCleared(ThreadedClient source) {
+        return source.getPlayer() != null;
+    }
 }

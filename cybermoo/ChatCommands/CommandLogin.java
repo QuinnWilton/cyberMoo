@@ -2,40 +2,41 @@ package cybermoo.ChatCommands;
 
 import com.google.gson.Gson;
 import cybermoo.Player;
+import cybermoo.Player;
 import cybermoo.ThreadedClient;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.FileReader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class CommandRegister implements Command {
+public class CommandLogin implements Command {
 
     private final String userList = "data/users/";
-    private PrintWriter fileOutput;
+    private FileReader fileInput;
     private Gson gson;
 
-    public CommandRegister() {
+    public CommandLogin() {
         gson = new Gson();
     }
 
     public void call(String[] arguments, ThreadedClient source) {
         if (new File(userList + "/" + arguments[0] + ".txt").exists()) {
-            source.sendText("The selected username already exists, have you forgotten your password?");
-        } else {
             try {
-                fileOutput = new PrintWriter(new FileWriter(userList + arguments[0] + ".txt"));
-                String userName = arguments[0];
+                fileInput = new FileReader(userList + arguments[0] + ".txt");
                 String hash = toSHA(arguments[1]);
-                Player player = new Player();
-                player.setName(userName);
-                player.setHash(hash);
-                fileOutput.println(gson.toJson(player));
-                fileOutput.close();
-                source.sendText("Your account has been created!");
+                Player player = gson.fromJson(fileInput, Player.class);
+                fileInput.close();
+                if (hash.equals(player.getHash())) {
+                    source.sendText("You have successfully logged in!");
+                    source.setPlayer(player);
+                } else {
+                    source.sendText("The password submitted is incorrect");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            source.sendText("The requested user does not exist, why not REGISTER it?");
         }
     }
 

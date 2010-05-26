@@ -9,4 +9,8 @@ public class CommandNick implements Command{
         Server.getInstance().sendAll(source.getPlayer().getName() + " has changed his or her nickname to " + arguments[0]);
         source.getPlayer().setName(arguments[0]);
     }
+
+    public Boolean isCleared(ThreadedClient source) {
+        return true;
+    }
 }
