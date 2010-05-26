@@ -30,7 +30,7 @@ public class ThreadedClient extends Thread {
     @Override
     public void run() {
         try {
-            sendText("Welcome to cyberMoo! Please LOGIN or REGISTER to continue!\nlogin username password\nregister username password");
+            sendText("Welcome to cyberMoo! Please LOGIN or REGISTER to continue!");
             String inputLine;
             while ((inputLine = getInputStream().readLine()) != null) {
                 getServer().getCommandHandler().parse(inputLine, this);
@@ -39,6 +39,7 @@ public class ThreadedClient extends Thread {
             e.printStackTrace();
         } finally {
             getOutputStream().close();
+            getServer().getClients().remove(this);
         }
     }
 

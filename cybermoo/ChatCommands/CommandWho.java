@@ -17,4 +17,8 @@ public class CommandWho implements Command {
     public Boolean isCleared(ThreadedClient source) {
         return true;
     }
+
+    public String getHelp() {
+        return "who\nReturns the number of connected players, along with a list of those who are logged in.";
+    }
 }

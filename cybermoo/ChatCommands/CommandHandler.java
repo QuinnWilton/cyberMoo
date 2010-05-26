@@ -14,12 +14,13 @@ public class CommandHandler {
         commands.put("say", new CommandSay());
         commands.put("register", new CommandRegister());
         commands.put("login", new CommandLogin());
+        commands.put("help", new CommandHelp());
     }
 
     public void parse(String text, ThreadedClient source) {
         String[] tokens = text.trim().split(" ");
         try {
-            Command command = commands.get(tokens[0].toLowerCase());
+            Command command = getCommands().get(tokens[0].toLowerCase());
             if (command.isCleared(source)) {
                 String[] arguments;
                 if (tokens.length > 1) {
@@ -38,5 +39,19 @@ public class CommandHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * @return the commands
+     */
+    public Map<String, Command> getCommands() {
+        return commands;
+    }
+
+    /**
+     * @param commands the commands to set
+     */
+    public void setCommands(Map<String, Command> commands) {
+        this.commands = commands;
     }
 }

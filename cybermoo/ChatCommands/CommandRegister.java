@@ -43,6 +43,10 @@ public class CommandRegister implements Command {
         return source.getPlayer() == null;
     }
 
+    public String getHelp() {
+        return "register <Username> <Password>";
+    }
+
     private String toSHA(String password) throws SecurityException, NoSuchAlgorithmException {
         MessageDigest m = MessageDigest.getInstance("SHA");
         m.update(password.getBytes());
