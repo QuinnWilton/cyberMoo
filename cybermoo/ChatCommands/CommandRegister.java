@@ -20,22 +20,26 @@ public class CommandRegister implements Command {
     }
 
     public void call(String[] arguments, ThreadedClient source) {
-        if (new File(userList + "/" + arguments[0] + ".txt").exists()) {
-            source.sendText("The selected username already exists, have you forgotten your password?");
-        } else {
-            try {
-                fileOutput = new PrintWriter(new FileWriter(userList + arguments[0] + ".txt"));
-                String userName = arguments[0];
-                String hash = toSHA(arguments[1]);
-                Player player = new Player();
-                player.setName(userName);
-                player.setHash(hash);
-                fileOutput.println(gson.toJson(player));
-                fileOutput.close();
-                source.sendText("Your account has been created!");
-            } catch (Exception e) {
-                e.printStackTrace();
+        if (arguments != null) {
+            if (new File(userList + "/" + arguments[0] + ".txt").exists()) {
+                source.sendText("The selected username already exists, have you forgotten your password?");
+            } else {
+                try {
+                    fileOutput = new PrintWriter(new FileWriter(userList + arguments[0] + ".txt"));
+                    String userName = arguments[0];
+                    String hash = toSHA(arguments[1]);
+                    Player player = new Player();
+                    player.setName(userName);
+                    player.setHash(hash);
+                    fileOutput.println(gson.toJson(player));
+                    fileOutput.close();
+                    source.sendText("Your account has been created!");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+        } else {
+            source.sendText("I don't understand, try: register <Username> <Password>");
         }
     }
 

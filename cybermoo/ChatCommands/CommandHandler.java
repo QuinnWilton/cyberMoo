@@ -15,26 +15,27 @@ public class CommandHandler {
         commands.put("register", new CommandRegister());
         commands.put("login", new CommandLogin());
         commands.put("help", new CommandHelp());
+        commands.put("@quit", new CommandQuit());
     }
 
     public void parse(String text, ThreadedClient source) {
         String[] tokens = text.trim().split(" ");
         try {
             Command command = getCommands().get(tokens[0].toLowerCase());
-            if (command.isCleared(source)) {
+            if (command != null) {
                 String[] arguments;
                 if (tokens.length > 1) {
                     arguments = text.substring(text.indexOf(" ")).trim().split(" ");
                 } else {
-                    arguments = tokens;
+                    arguments = null;
                 }
-                if (command != null) {
+                if (command.isCleared(source)) {
                     command.call(arguments, source);
                 } else {
-                    source.sendText("I don't understand what you mean by \"" + tokens[0] + "\"");
+                    source.sendText("You do not have permission to use the requested command");
                 }
             } else {
-                source.sendText("You do not have permission to use the requested command");
+                source.sendText("I don't understand what you mean by \"" + tokens[0] + "\"");
             }
         } catch (Exception e) {
             e.printStackTrace();

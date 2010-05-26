@@ -20,23 +20,27 @@ public class CommandLogin implements Command {
     }
 
     public void call(String[] arguments, ThreadedClient source) {
-        if (new File(userList + "/" + arguments[0] + ".txt").exists()) {
-            try {
-                fileInput = new FileReader(userList + arguments[0] + ".txt");
-                String hash = toSHA(arguments[1]);
-                Player player = gson.fromJson(fileInput, Player.class);
-                fileInput.close();
-                if (hash.equals(player.getHash())) {
-                    source.sendText("You have successfully logged in!");
-                    source.setPlayer(player);
-                } else {
-                    source.sendText("The password submitted is incorrect");
+        if (arguments != null) {
+            if (new File(userList + "/" + arguments[0] + ".txt").exists()) {
+                try {
+                    fileInput = new FileReader(userList + arguments[0] + ".txt");
+                    String hash = toSHA(arguments[1]);
+                    Player player = gson.fromJson(fileInput, Player.class);
+                    fileInput.close();
+                    if (hash.equals(player.getHash())) {
+                        source.sendText("You have successfully logged in!");
+                        source.setPlayer(player);
+                    } else {
+                        source.sendText("The password submitted is incorrect");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } else {
+                source.sendText("The requested user does not exist, why not REGISTER it?");
             }
         } else {
-            source.sendText("The requested user does not exist, why not REGISTER it?");
+            source.sendText("I don't understand, try: login <Username> <Password>");
         }
     }
 
