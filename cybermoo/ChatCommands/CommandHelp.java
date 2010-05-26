@@ -1,5 +1,6 @@
 package cybermoo.ChatCommands;
 
+import cybermoo.ChatCommands.CommandHandler;
 import cybermoo.Server;
 import cybermoo.ThreadedClient;
 import java.util.Iterator;
@@ -8,10 +9,10 @@ public class CommandHelp implements Command {
 
     public void call(String[] arguments, ThreadedClient source) {
         if (arguments != null) {
-            source.sendText(Server.getInstance().getCommandHandler().getCommands().get(arguments[0]).getHelp());
+            source.sendText(CommandHandler.getInstance().getCommands().get(arguments[0]).getHelp());
         } else {
             source.sendText("The following commands are available:");
-            Iterator iterator = Server.getInstance().getCommandHandler().getCommands().keySet().iterator();
+            Iterator iterator = CommandHandler.getInstance().getCommands().keySet().iterator();
             while(iterator.hasNext()) {
                 source.sendText(iterator.next().toString());
             }

@@ -8,14 +8,12 @@ import java.util.ArrayList;
 public class Server {
 
     private static Server instance = null;
-    private CommandHandler commandHandler;
     private Boolean listening;
     private int port;
     private ServerSocket socket;
     private ArrayList<ThreadedClient> clients = new ArrayList<ThreadedClient>();
 
     protected Server(int port) {
-        setCommandHandler(new CommandHandler());
         setPort(port);
         setListening(true);
     }
@@ -125,19 +123,4 @@ public class Server {
     public void setClients(ArrayList<ThreadedClient> clients) {
         this.clients = clients;
     }
-
-    /**
-     * @return the commandHandler
-     */
-    public CommandHandler getCommandHandler() {
-        return commandHandler;
-    }
-
-    /**
-     * @param commandHandler the commandHandler to set
-     */
-    public void setCommandHandler(CommandHandler commandHandler) {
-        this.commandHandler = commandHandler;
-    }
-
 }

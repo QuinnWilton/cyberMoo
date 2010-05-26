@@ -5,8 +5,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandHandler {
-
+    private static CommandHandler instance;
     private Map<String, Command> commands;
+
+    public static CommandHandler getInstance() {
+        if(instance == null) {
+            instance = new CommandHandler();
+        }
+        return instance;
+    }
 
     public CommandHandler() {
         commands = new HashMap<String, Command>();
@@ -16,6 +23,7 @@ public class CommandHandler {
         commands.put("login", new CommandLogin());
         commands.put("help", new CommandHelp());
         commands.put("@quit", new CommandQuit());
+        commands.put("move", new CommandMove());
     }
 
     public void parse(String text, ThreadedClient source) {

@@ -1,5 +1,6 @@
 package cybermoo;
 
+import cybermoo.ChatCommands.CommandHandler;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,7 +24,6 @@ public class ThreadedClient extends Thread {
             setInputStream(new BufferedReader(new InputStreamReader(getSocket().getInputStream(), "UTF-8")));
         } catch (IOException e) {
             e.printStackTrace();
-            System.exit(-1);
         }
     }
 
@@ -33,13 +33,14 @@ public class ThreadedClient extends Thread {
             sendText("Welcome to cyberMoo! Please LOGIN or REGISTER to continue!");
             String inputLine;
             while ((inputLine = getInputStream().readLine()) != null) {
-                getServer().getCommandHandler().parse(inputLine, this);
+                CommandHandler.getInstance().parse(inputLine, this);
             }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             getOutputStream().close();
             getServer().getClients().remove(this);
+            SceneHandler.getInstance().getScenes().get(getPlayer().getLocation()).getPlayers().remove(getPlayer());
         }
     }
 

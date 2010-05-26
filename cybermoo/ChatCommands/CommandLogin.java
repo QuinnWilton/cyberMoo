@@ -2,7 +2,7 @@ package cybermoo.ChatCommands;
 
 import com.google.gson.Gson;
 import cybermoo.Player;
-import cybermoo.Player;
+import cybermoo.SceneHandler;
 import cybermoo.ThreadedClient;
 import java.io.File;
 import java.io.FileReader;
@@ -20,7 +20,7 @@ public class CommandLogin implements Command {
     }
 
     public void call(String[] arguments, ThreadedClient source) {
-        if (arguments != null) {
+        if (arguments != null || arguments.length < 2) {
             if (new File(userList + "/" + arguments[0] + ".txt").exists()) {
                 try {
                     fileInput = new FileReader(userList + arguments[0] + ".txt");
@@ -28,8 +28,9 @@ public class CommandLogin implements Command {
                     Player player = gson.fromJson(fileInput, Player.class);
                     fileInput.close();
                     if (hash.equals(player.getHash())) {
-                        source.sendText("You have successfully logged in!");
+                        source.sendText("You have successfully logged in!\n");
                         source.setPlayer(player);
+                        source.getPlayer().sendLocationData();
                     } else {
                         source.sendText("The password submitted is incorrect");
                     }
