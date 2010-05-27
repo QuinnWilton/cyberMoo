@@ -14,6 +14,7 @@ public class SceneHandler {
     private Scanner fileInput;
     private Gson gson;
     private Map<String, Scene> scenes;
+    public static final String defaultStart = "Dark Room";
 
     public static SceneHandler getInstance() {
         if (instance == null) {

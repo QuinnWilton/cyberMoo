@@ -2,7 +2,6 @@ package cybermoo.ChatCommands;
 
 import cybermoo.Scene;
 import cybermoo.SceneHandler;
-import cybermoo.Server;
 import cybermoo.ThreadedClient;
 
 public class CommandSay implements Command {

@@ -2,6 +2,7 @@ package cybermoo.ChatCommands;
 
 import com.google.gson.Gson;
 import cybermoo.Player;
+import cybermoo.SceneHandler;
 import cybermoo.ThreadedClient;
 import java.io.File;
 import java.io.FileWriter;
@@ -26,11 +27,10 @@ public class CommandRegister implements Command {
             } else {
                 try {
                     fileOutput = new PrintWriter(new FileWriter(userList + arguments[0] + ".txt"));
-                    String userName = arguments[0];
-                    String hash = toSHA(arguments[1]);
                     Player player = new Player();
-                    player.setName(userName);
-                    player.setHash(hash);
+                    player.setName(arguments[0]);
+                    player.setHash(toSHA(arguments[1]));
+                    player.setLocation(SceneHandler.defaultStart);
                     fileOutput.println(gson.toJson(player));
                     fileOutput.close();
                     source.sendText("Your account has been created!");

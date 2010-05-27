@@ -1,11 +1,8 @@
 package cybermoo;
 
-import com.google.gson.Gson;
-
 public class Main {
 
-  public static void main(String[] args) {
-    Server server = Server.getInstance(8080);
-    server.startListening();
-  }
+    public static void main(String[] args) {
+        Server.getInstance(8080).startListening();
+    }
 }

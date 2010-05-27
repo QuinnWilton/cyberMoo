@@ -5,17 +5,9 @@ public class Player {
     private String name;
     private String hash;
     private String location;
+    private transient ThreadedClient client;
 
     public Player() {
-    }
-
-    public ThreadedClient getClient() {
-        for (int i = 0; i < Server.getInstance().getClients().size(); i++) {
-            if (Server.getInstance().getClients().get(i).getPlayer() == this) {
-                return Server.getInstance().getClients().get(i);
-            }
-        }
-        return null;
     }
 
     /**
@@ -57,19 +49,49 @@ public class Player {
      * @param location the location to set
      */
     public void setLocation(String location) {
-        if (location != null) {
-            SceneHandler.getInstance().getScenes().get(location).getPlayers().remove(this);
-        }
         this.location = location;
-        SceneHandler.getInstance().getScenes().get(location).getPlayers().add(this);
+    }
+
+    public void move(String location) {
+        if (getLocation() != null) {
+            SceneHandler.getInstance().getScenes().get(getLocation()).getPlayers().remove(this);
+        }
+        setLocation(location);
+        SceneHandler.getInstance().getScenes().get(getLocation()).getPlayers().add(this);
     }
 
     public void sendLocationData() {
-        if(getLocation() == null) {
-            setLocation("TestStart");
+        if (getLocation() == null) {
+            move(SceneHandler.defaultStart);
         }
         if (getClient() != null) {
             getClient().sendText(SceneHandler.getInstance().getScenes().get(location).getSceneDetails());
         }
+    }
+
+    /**
+     * @return the client
+     */
+    public ThreadedClient getClient() {
+        if (client == null) {
+            for (int i = 0; i < Server.getInstance().getClients().size(); i++) {
+                if (Server.getInstance().getClients().get(i).getPlayer() == this) {
+                    setClient(Server.getInstance().getClients().get(i));
+                }
+            }
+        }
+        return client;
+    }
+
+    /**
+     * @param client the client to set
+     */
+    public void setClient(ThreadedClient client) {
+        this.client = client;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }

@@ -1,6 +1,5 @@
 package cybermoo;
 
-import cybermoo.ChatCommands.CommandHandler;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class Server {
         client.sendText(text);
     }
 
-    public void sendAll(String text) {
+    public void sendToAllClients(String text) {
         for(int i = 0; i < getClients().size(); i++) {
             getClients().get(i).sendText(text);
         }

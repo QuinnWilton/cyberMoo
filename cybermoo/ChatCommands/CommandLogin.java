@@ -30,7 +30,7 @@ public class CommandLogin implements Command {
                     if (hash.equals(player.getHash())) {
                         source.sendText("You have successfully logged in!\n");
                         source.setPlayer(player);
-                        SceneHandler.getInstance().getScenes().get(source.getPlayer().getLocation()).getPlayers().add(source.getPlayer());
+                        source.getPlayer().move(source.getPlayer().getLocation());
                         source.getPlayer().sendLocationData();
                     } else {
                         source.sendText("The password submitted is incorrect");

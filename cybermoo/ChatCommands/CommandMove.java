@@ -28,7 +28,7 @@ public class CommandMove implements Command {
                 for(int i = 0; i < SceneHandler.getInstance().getScenes().get(direction).getPlayers().size(); i++) {
                     SceneHandler.getInstance().getScenes().get(direction).getPlayers().get(i).getClient().sendText(source.getPlayer().getName() + " arrives at your location.");
                 }
-                source.getPlayer().setLocation(direction);
+                source.getPlayer().move(direction);
                 source.getPlayer().sendLocationData();
             } else {
                 source.sendText("Please input a valid direction.");

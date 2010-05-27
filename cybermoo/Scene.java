@@ -14,8 +14,8 @@ public class Scene {
     private String east;
     private String south;
     private String west;
-    private LinkedList<Item> items;
-    private LinkedList<Player> players;
+    private transient LinkedList<Item> items;
+    private transient LinkedList<Player> players;
 
     public Scene() {
         setName("");
@@ -35,25 +35,8 @@ public class Scene {
         String totalDetails = getName() + "\n"
                 + getDescription() + "\n";
 
-        String itemDetails = "";
-        if (getItems().size() > 1) {
-            for (int i = 0; i < getItems().size() - 1; i++) {
-                itemDetails += getItems().get(i) + ", ";
-            }
-            itemDetails += "and a " + getItems().get(getItems().size() - 1) + " are lying on the ground here.";
-        } else if(getItems().size() == 1) {
-            itemDetails += "A " + getItems().get(getItems().size() - 1) + " is lying on the ground here.";
-        }
-
-        String playerDetails = "";
-        if (getPlayers().size() > 1) {
-            for (int i = 0; i < getPlayers().size() - 1; i++) {
-                playerDetails += getPlayers().get(i).getName() + ", ";
-            }
-            playerDetails += "and " + getPlayers().get(getPlayers().size() - 1).getName() + " are standing here.";
-        } else if(getPlayers().size() == 1) {
-            playerDetails += getPlayers().get(getPlayers().size() - 1).getName() + " is standing here.";
-        }
+        String itemDetails = getDetail(getItems(), " lying on the ground here.");
+        String playerDetails = getDetail(getPlayers(), " standing here.");
 
         String directionDetails = "\n";
         if(!getUp().equals("")) {
@@ -77,6 +60,19 @@ public class Scene {
 
         totalDetails += itemDetails + playerDetails + directionDetails;
         return totalDetails;
+    }
+
+    public String getDetail(LinkedList detailList, String ending) {
+        String detailString = "";
+        if (detailList.size() > 1) {
+            for (int i = 0; i < detailList.size() - 1; i++) {
+                detailString += detailList.get(i).toString() + ", ";
+            }
+            detailString += "and " + detailList.get(detailList.size() - 1).toString() + " are " + ending;
+        } else if(detailList.size() == 1) {
+            detailString += detailList.get(detailList.size() - 1).toString() + " is " + ending;
+        }
+        return detailString;
     }
 
     /**
