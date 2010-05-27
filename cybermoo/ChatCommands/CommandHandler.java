@@ -24,6 +24,7 @@ public class CommandHandler {
         commands.put("help", new CommandHelp());
         commands.put("@quit", new CommandQuit());
         commands.put("move", new CommandMove());
+        commands.put("look", new CommandLook());
     }
 
     public void parse(String text, ThreadedClient source) {

@@ -25,6 +25,9 @@ public class CommandMove implements Command {
                 direction = curLocation.getWest();
             }
             if (!direction.equals("")) {
+                for(int i = 0; i < SceneHandler.getInstance().getScenes().get(direction).getPlayers().size(); i++) {
+                    SceneHandler.getInstance().getScenes().get(direction).getPlayers().get(i).getClient().sendText(source.getPlayer().getName() + " arrives at your location.");
+                }
                 source.getPlayer().setLocation(direction);
                 source.getPlayer().sendLocationData();
             } else {
@@ -40,6 +43,6 @@ public class CommandMove implements Command {
     }
 
     public String getHelp() {
-        return "say <Message>\nBroadcasts your message to all nearby players";
+        return "move <direction>\nMoves your player in the specified direction.";
     }
 }
