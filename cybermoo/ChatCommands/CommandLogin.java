@@ -1,6 +1,7 @@
 package cybermoo.ChatCommands;
 
 import com.google.gson.Gson;
+import cybermoo.Handlers.DataHandler;
 import cybermoo.Player;
 import cybermoo.ThreadedClient;
 import java.io.File;
@@ -11,32 +12,23 @@ import java.security.NoSuchAlgorithmException;
 public class CommandLogin implements Command {
 
     private final String userList = "data/users/";
-    private FileReader fileInput;
-    private Gson gson;
 
     public CommandLogin() {
-        gson = new Gson();
     }
 
     public void call(String[] arguments, ThreadedClient source) {
         if (arguments != null || arguments.length < 2) {
             if (new File(userList + "/" + arguments[0] + ".txt").exists()) {
-                try {
-                    fileInput = new FileReader(userList + arguments[0] + ".txt");
-                    String hash = toSHA(arguments[1]);
-                    Player player = gson.fromJson(fileInput, Player.class);
-                    fileInput.close();
-                    if (hash.equals(player.getHash())) {
-                        source.sendText("You have successfully logged in!\n");
-                        player.setClient(source);
-                        source.setPlayer(player);
-                        source.getPlayer().move(source.getPlayer().getLocation());
-                        source.getPlayer().sendLocationData();
-                    } else {
-                        source.sendText("The password submitted is incorrect");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                String hash = toSHA(arguments[1]);
+                Player player = DataHandler.getInstance().loadObject(userList + arguments[0] + ".txt", Player.class);
+                if (hash.equals(player.getHash())) {
+                    source.sendText("You have successfully logged in!\n");
+                    player.setClient(source);
+                    source.setPlayer(player);
+                    source.getPlayer().move(source.getPlayer().getLocation());
+                    source.getPlayer().sendLocationData();
+                } else {
+                    source.sendText("The password submitted is incorrect");
                 }
             } else {
                 source.sendText("The requested user does not exist, why not REGISTER it?");
@@ -54,10 +46,15 @@ public class CommandLogin implements Command {
         return "login <Username> <Password>";
     }
 
-    private String toSHA(String password) throws SecurityException, NoSuchAlgorithmException {
-        MessageDigest m = MessageDigest.getInstance("SHA");
-        m.update(password.getBytes());
-        return convToHex(m.digest());
+    private String toSHA(String password) {
+        try {
+            MessageDigest m = MessageDigest.getInstance("SHA");
+            m.update(password.getBytes());
+            return convToHex(m.digest());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private String convToHex(byte[] data) {

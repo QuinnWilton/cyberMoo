@@ -1,5 +1,7 @@
 package cybermoo;
 
+import cybermoo.Handlers.SceneHandler;
+
 public class Player {
 
     private String name;

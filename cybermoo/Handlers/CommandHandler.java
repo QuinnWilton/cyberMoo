@@ -1,0 +1,78 @@
+package cybermoo.Handlers;
+
+import cybermoo.ChatCommands.Command;
+import cybermoo.ChatCommands.CommandBake;
+import cybermoo.ChatCommands.CommandHelp;
+import cybermoo.ChatCommands.CommandLogin;
+import cybermoo.ChatCommands.CommandLook;
+import cybermoo.ChatCommands.CommandMove;
+import cybermoo.ChatCommands.CommandQuit;
+import cybermoo.ChatCommands.CommandRegister;
+import cybermoo.ChatCommands.CommandSay;
+import cybermoo.ChatCommands.CommandWho;
+import cybermoo.ThreadedClient;
+import java.util.HashMap;
+import java.util.Map;
+
+public class CommandHandler {
+    private static CommandHandler instance;
+    private Map<String, Command> commands;
+
+    public static CommandHandler getInstance() {
+        if(instance == null) {
+            instance = new CommandHandler();
+        }
+        return instance;
+    }
+
+    public CommandHandler() {
+        commands = new HashMap<String, Command>();
+        commands.put("who", new CommandWho());
+        commands.put("say", new CommandSay());
+        commands.put("register", new CommandRegister());
+        commands.put("login", new CommandLogin());
+        commands.put("help", new CommandHelp());
+        commands.put("@quit", new CommandQuit());
+        commands.put("move", new CommandMove());
+        commands.put("look", new CommandLook());
+        commands.put("bake", new CommandBake());
+    }
+
+    public void parse(String text, ThreadedClient source) {
+        String[] tokens = text.trim().split(" ");
+        try {
+            Command command = getCommands().get(tokens[0].toLowerCase());
+            if (command != null) {
+                String[] arguments;
+                if (tokens.length > 1) {
+                    arguments = text.substring(text.indexOf(" ")).trim().split(" ");
+                } else {
+                    arguments = null;
+                }
+                if (command.isCleared(source)) {
+                    command.call(arguments, source);
+                } else {
+                    source.sendText("You do not have permission to use the requested command");
+                }
+            } else {
+                source.sendText("I don't understand what you mean by \"" + tokens[0] + "\"");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @return the commands
+     */
+    public Map<String, Command> getCommands() {
+        return commands;
+    }
+
+    /**
+     * @param commands the commands to set
+     */
+    public void setCommands(Map<String, Command> commands) {
+        this.commands = commands;
+    }
+}
