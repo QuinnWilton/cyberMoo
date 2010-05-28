@@ -13,7 +13,7 @@ public class CommandSay implements Command {
                 temp += " " + arguments[i];
             }
             String message = temp.trim();
-            Scene location = SceneHandler.getInstance().getScenes().get(source.getPlayer().getLocation());
+            Scene location = source.getPlayer().getScene();
             for (int i = 0; i < location.getPlayers().size(); i++) {
                 if (location.getPlayers().get(i).getClient() != null) {
                     location.getPlayers().get(i).getClient().sendText(source.getPlayer().getName() + " says \"" + message + "\"");

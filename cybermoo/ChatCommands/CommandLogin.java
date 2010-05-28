@@ -2,7 +2,6 @@ package cybermoo.ChatCommands;
 
 import com.google.gson.Gson;
 import cybermoo.Player;
-import cybermoo.SceneHandler;
 import cybermoo.ThreadedClient;
 import java.io.File;
 import java.io.FileReader;
@@ -29,6 +28,7 @@ public class CommandLogin implements Command {
                     fileInput.close();
                     if (hash.equals(player.getHash())) {
                         source.sendText("You have successfully logged in!\n");
+                        player.setClient(source);
                         source.setPlayer(player);
                         source.getPlayer().move(source.getPlayer().getLocation());
                         source.getPlayer().sendLocationData();

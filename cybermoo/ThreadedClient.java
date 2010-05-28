@@ -46,7 +46,7 @@ public class ThreadedClient extends Thread {
             //TODO save character
             getSocket().close();
             getServer().getClients().remove(this);
-            SceneHandler.getInstance().getScenes().get(getPlayer().getLocation()).getPlayers().remove(getPlayer());
+            getPlayer().getScene().getPlayers().remove(getPlayer());
         } catch (IOException e) {
             System.err.println("Something went horribly wrong.");
         }

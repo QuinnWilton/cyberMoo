@@ -8,7 +8,7 @@ public class CommandMove implements Command {
 
     public void call(String[] arguments, ThreadedClient source) {
         if (arguments != null) {
-            Scene curLocation = SceneHandler.getInstance().getScenes().get(source.getPlayer().getLocation());
+            Scene curLocation = source.getPlayer().getScene();
             String arg = arguments[0].toLowerCase();
             String direction = "";
             if (arg.equals("up")) {

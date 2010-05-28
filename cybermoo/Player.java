@@ -38,6 +38,10 @@ public class Player {
         this.hash = hash;
     }
 
+    public Scene getScene() {
+        return SceneHandler.getInstance().getScenes().get(getLocation());
+    }
+
     /**
      * @return the location
      */
@@ -54,10 +58,10 @@ public class Player {
 
     public void move(String location) {
         if (getLocation() != null) {
-            SceneHandler.getInstance().getScenes().get(getLocation()).getPlayers().remove(this);
+            getScene().getPlayers().remove(this);
         }
         setLocation(location);
-        SceneHandler.getInstance().getScenes().get(getLocation()).getPlayers().add(this);
+        getScene().getPlayers().add(this);
     }
 
     public void sendLocationData() {
@@ -65,7 +69,7 @@ public class Player {
             move(SceneHandler.defaultStart);
         }
         if (getClient() != null) {
-            getClient().sendText(SceneHandler.getInstance().getScenes().get(location).getSceneDetails());
+            getClient().sendText(getScene().getSceneDetails());
         }
     }
 
@@ -73,13 +77,6 @@ public class Player {
      * @return the client
      */
     public ThreadedClient getClient() {
-        if (client == null) {
-            for (int i = 0; i < Server.getInstance().getClients().size(); i++) {
-                if (Server.getInstance().getClients().get(i).getPlayer() == this) {
-                    setClient(Server.getInstance().getClients().get(i));
-                }
-            }
-        }
         return client;
     }
 
