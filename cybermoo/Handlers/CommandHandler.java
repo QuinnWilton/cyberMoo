@@ -5,6 +5,7 @@ import cybermoo.ChatCommands.CommandBake;
 import cybermoo.ChatCommands.CommandHelp;
 import cybermoo.ChatCommands.CommandLogin;
 import cybermoo.ChatCommands.CommandLook;
+import cybermoo.ChatCommands.CommandMe;
 import cybermoo.ChatCommands.CommandMove;
 import cybermoo.ChatCommands.CommandQuit;
 import cybermoo.ChatCommands.CommandRegister;
@@ -36,6 +37,7 @@ public class CommandHandler {
         commands.put("move", new CommandMove());
         commands.put("look", new CommandLook());
         commands.put("bake", new CommandBake());
+        commands.put("me", new CommandMe());
     }
 
     public void parse(String text, ThreadedClient source) {
