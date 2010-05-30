@@ -7,6 +7,7 @@ public class Player {
     private String name;
     private String hash;
     private String location;
+    private Integer accessPermissions;
     private transient ThreadedClient client;
 
     public Player() {
@@ -24,6 +25,13 @@ public class Player {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * @param level the level to set
+     */
+    public Integer getLevel() {
+        return accessPermissions;
     }
 
     /**
@@ -93,4 +101,5 @@ public class Player {
     public String toString() {
         return getName();
     }
+
 }
