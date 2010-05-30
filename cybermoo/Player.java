@@ -7,7 +7,7 @@ public class Player {
     private String name;
     private String hash;
     private String location;
-    private Integer accessPermissions;
+    private Integer accessLevel;
     private transient ThreadedClient client;
 
     public Player() {
@@ -31,7 +31,7 @@ public class Player {
      * @param level the level to set
      */
     public Integer getLevel() {
-        return accessPermissions;
+        return accessLevel;
     }
 
     /**
