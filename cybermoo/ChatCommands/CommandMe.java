@@ -29,6 +29,6 @@ public class CommandMe implements Command {
     }
 
     public String getHelp() {
-        return "say <Message>\nBroadcasts an action to all nearby players";
+        return "me <Message>\nBroadcasts an action to all nearby players";
     }
 }
