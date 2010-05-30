@@ -15,7 +15,7 @@ public class CommandRegister implements Command {
     }
 
     public void call(String[] arguments, ThreadedClient source) {
-        if (arguments != null) {
+        if (arguments != null && arguments.length == 2) {
             if (new File(userList + "/" + arguments[0] + ".txt").exists()) {
                 source.sendText("The selected username already exists, have you forgotten your password?");
             } else {

@@ -28,13 +28,6 @@ public class Player {
     }
 
     /**
-     * @param level the level to set
-     */
-    public Integer getLevel() {
-        return accessLevel;
-    }
-
-    /**
      * @return the hash
      */
     public String getHash() {
@@ -100,6 +93,20 @@ public class Player {
     @Override
     public String toString() {
         return getName();
+    }
+
+    /**
+     * @return the accessLevel
+     */
+    public Integer getAccessLevel() {
+        return accessLevel;
+    }
+
+    /**
+     * @param accessLevel the accessLevel to set
+     */
+    public void setAccessLevel(Integer accessLevel) {
+        this.accessLevel = accessLevel;
     }
 
 }

@@ -1,13 +1,10 @@
 package cybermoo.ChatCommands;
 
-import com.google.gson.Gson;
 import cybermoo.Handlers.DataHandler;
 import cybermoo.Player;
 import cybermoo.ThreadedClient;
 import java.io.File;
-import java.io.FileReader;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class CommandLogin implements Command {
 
@@ -17,7 +14,7 @@ public class CommandLogin implements Command {
     }
 
     public void call(String[] arguments, ThreadedClient source) {
-        if (arguments != null || arguments.length < 2) {
+        if (arguments != null && arguments.length == 2) {
             if (new File(userList + "/" + arguments[0] + ".txt").exists()) {
                 String hash = toSHA(arguments[1]);
                 Player player = DataHandler.getInstance().loadObject(userList + arguments[0] + ".txt", Player.class);
