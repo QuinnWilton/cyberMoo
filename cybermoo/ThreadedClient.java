@@ -1,6 +1,6 @@
 package cybermoo;
 
-import cybermoo.ChatCommands.CommandHandler;
+import cybermoo.Handlers.CommandHandler;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

@@ -1,7 +1,7 @@
 package cybermoo.ChatCommands;
 
 import cybermoo.Scene;
-import cybermoo.SceneHandler;
+import cybermoo.Handlers.SceneHandler;
 import cybermoo.ThreadedClient;
 
 public class CommandMove implements Command {

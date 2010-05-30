@@ -1,5 +1,15 @@
-package cybermoo.ChatCommands;
+package cybermoo.Handlers;
 
+import cybermoo.ChatCommands.Command;
+import cybermoo.ChatCommands.CommandBake;
+import cybermoo.ChatCommands.CommandHelp;
+import cybermoo.ChatCommands.CommandLogin;
+import cybermoo.ChatCommands.CommandLook;
+import cybermoo.ChatCommands.CommandMove;
+import cybermoo.ChatCommands.CommandQuit;
+import cybermoo.ChatCommands.CommandRegister;
+import cybermoo.ChatCommands.CommandSay;
+import cybermoo.ChatCommands.CommandWho;
 import cybermoo.ThreadedClient;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +35,7 @@ public class CommandHandler {
         commands.put("@quit", new CommandQuit());
         commands.put("move", new CommandMove());
         commands.put("look", new CommandLook());
+        commands.put("bake", new CommandBake());
     }
 
     public void parse(String text, ThreadedClient source) {

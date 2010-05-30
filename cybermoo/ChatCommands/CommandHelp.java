@@ -1,6 +1,6 @@
 package cybermoo.ChatCommands;
 
-import cybermoo.ChatCommands.CommandHandler;
+import cybermoo.Handlers.CommandHandler;
 import cybermoo.Server;
 import cybermoo.ThreadedClient;
 import java.util.Iterator;

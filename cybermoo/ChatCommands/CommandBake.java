@@ -4,19 +4,14 @@ import cybermoo.Scene;
 import cybermoo.Handlers.SceneHandler;
 import cybermoo.ThreadedClient;
 
-public class CommandSay implements Command {
+public class CommandBake implements Command {
 
     public void call(String[] arguments, ThreadedClient source) {
         if (arguments != null) {
-            String temp = "";
-            for (int i = 0; i < arguments.length; i++) {
-                temp += " " + arguments[i];
-            }
-            String message = temp.trim();
             Scene location = source.getPlayer().getScene();
             for (int i = 0; i < location.getPlayers().size(); i++) {
                 if (location.getPlayers().get(i).getClient() != null) {
-                    location.getPlayers().get(i).getClient().sendText(source.getPlayer().getName() + " says \"" + message + "\"");
+                    location.getPlayers().get(i).getClient().sendText(source.getPlayer().getName() + " bakes a " + arguments[0] + " cake!");
                 }
             }
         } else {
