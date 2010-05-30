@@ -20,7 +20,7 @@ public class CommandMe implements Command {
                 }
             }
         } else {
-            source.sendText("What are you trying to do? me <message>");
+            source.sendText("What are you trying to do? me <action>");
         }
     }
 
