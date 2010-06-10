@@ -1,5 +1,10 @@
 package cybermoo.ChatCommands;
 
+/**
+ * Returns a description of the player's current location
+ * @author Shane
+ */
+
 import cybermoo.ThreadedClient;
 
 public class CommandLook implements Command {
@@ -9,7 +14,7 @@ public class CommandLook implements Command {
     }
 
     public Boolean isCleared(ThreadedClient source) {
-        return true;
+        return source.getPlayer() != null;
     }
 
     public String getHelp() {

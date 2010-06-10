@@ -1,7 +1,12 @@
 package cybermoo.ChatCommands;
 
+/**
+ * Allows the player to create an emote, alerting their
+ * action to nearby players
+ * @author Shane
+ */
+
 import cybermoo.Scene;
-import cybermoo.Handlers.SceneHandler;
 import cybermoo.ThreadedClient;
 
 public class CommandMe implements Command {

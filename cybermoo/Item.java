@@ -1,5 +1,9 @@
 package cybermoo;
 
+/**
+ * Acts as a base class for all items
+ * @author Shane
+ */
 
 public class Item {
     private String name;

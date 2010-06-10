@@ -1,30 +1,32 @@
 package cybermoo;
 
+/**
+ * Stores all of the fields required by a player character,
+ * along with a pointer to the client which instantiated the player
+ * @author Shane
+ */
+
 import cybermoo.Handlers.SceneHandler;
 
-public class Player {
+public class Player extends Creature{
 
-    private String name;
+    private int Thirst;
+    private int Hunger;
+    private int experience;
+    private int totalExperience;
     private String hash;
     private String location;
-    private Integer accessLevel;
     private transient ThreadedClient client;
 
     public Player() {
-    }
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
+        setDescription("");
+        setHealth(30);
+        setMaxHealth(30);
+        setThirst(100);
+        setHunger(100);
+        setExperience(0);
+        setTotalExperience(0);
+        setLocation(SceneHandler.defaultStart);
     }
 
     /**
@@ -60,15 +62,17 @@ public class Player {
     }
 
     public void move(String location) {
-        if (getLocation() != null) {
+        if (getLocation() != null && getScene() != null) {
             getScene().getPlayers().remove(this);
         }
-        setLocation(location);
-        getScene().getPlayers().add(this);
+        if (SceneHandler.getInstance().getScenes().get(location) != null) {
+            setLocation(location);
+            getScene().getPlayers().add(this);
+        }
     }
 
     public void sendLocationData() {
-        if (getLocation() == null) {
+        if (getLocation() == null || SceneHandler.getInstance().getScenes().get(location) == null) {
             move(SceneHandler.defaultStart);
         }
         if (getClient() != null) {
@@ -90,23 +94,59 @@ public class Player {
         this.client = client;
     }
 
-    @Override
-    public String toString() {
-        return getName();
+    /**
+     * @return the Thirst
+     */
+    public int getThirst() {
+        return Thirst;
     }
 
     /**
-     * @return the accessLevel
+     * @param Thirst the Thirst to set
      */
-    public Integer getAccessLevel() {
-        return accessLevel;
+    public void setThirst(int Thirst) {
+        this.Thirst = Thirst;
     }
 
     /**
-     * @param accessLevel the accessLevel to set
+     * @return the Hunger
      */
-    public void setAccessLevel(Integer accessLevel) {
-        this.accessLevel = accessLevel;
+    public int getHunger() {
+        return Hunger;
     }
 
+    /**
+     * @param Hunger the Hunger to set
+     */
+    public void setHunger(int Hunger) {
+        this.Hunger = Hunger;
+    }
+
+    /**
+     * @return the experience
+     */
+    public int getExperience() {
+        return experience;
+    }
+
+    /**
+     * @param experience the experience to set
+     */
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    /**
+     * @return the totalExperience
+     */
+    public int getTotalExperience() {
+        return totalExperience;
+    }
+
+    /**
+     * @param totalExperience the totalExperience to set
+     */
+    public void setTotalExperience(int totalExperience) {
+        this.totalExperience = totalExperience;
+    }
 }

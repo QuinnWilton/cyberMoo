@@ -1,7 +1,11 @@
 package cybermoo.ChatCommands;
 
+/**
+ * Broadcasts a message to all nearby players
+ * @author Shane
+ */
+
 import cybermoo.Scene;
-import cybermoo.Handlers.SceneHandler;
 import cybermoo.ThreadedClient;
 
 public class CommandSay implements Command {

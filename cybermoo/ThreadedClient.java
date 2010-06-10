@@ -1,5 +1,11 @@
 package cybermoo;
 
+/**
+ * Acts as a representation of the connected client, relaying all
+ * data to the server object
+ * @author Shane
+ */
+
 import cybermoo.Handlers.CommandHandler;
 import cybermoo.Handlers.DataHandler;
 import java.io.BufferedReader;
@@ -31,7 +37,7 @@ public class ThreadedClient extends Thread {
     @Override
     public void run() {
         try {
-            sendText("Welcome to cyberMoo! Please LOGIN or REGISTER to continue!");
+            sendText("Welcome to cyberMoo! Please " + TextAttributes.BOLD + "LOGIN" + TextAttributes.ALL_ATTRIBUTES_OFF + " or "  + TextAttributes.BOLD + "REGISTER " + TextAttributes.ALL_ATTRIBUTES_OFF + "to continue!  Type " + TextAttributes.BOLD + "HELP " + TextAttributes.ALL_ATTRIBUTES_OFF + "for a listing of available commands.");
             String inputLine;
             while ((inputLine = getInputStream().readLine()) != null) {
                 CommandHandler.getInstance().parse(inputLine, this);
@@ -44,7 +50,7 @@ public class ThreadedClient extends Thread {
 
     private void disconnect() {
         try {
-            //TODO save character
+            saveCharacter();
             getSocket().close();
             getServer().getClients().remove(this);
             getPlayer().getScene().getPlayers().remove(getPlayer());
@@ -53,8 +59,12 @@ public class ThreadedClient extends Thread {
         }
     }
 
+    public void saveCharacter() {
+        DataHandler.getInstance().saveObject("data/users/" + getPlayer().getName(), getPlayer(), false);
+    }
+
     public void sendText(String text) {
-        getOutputStream().println(text);
+        getOutputStream().println(text + TextAttributes.ALL_ATTRIBUTES_OFF);
     }
 
     /**

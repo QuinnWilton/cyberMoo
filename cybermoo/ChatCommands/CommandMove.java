@@ -1,5 +1,11 @@
 package cybermoo.ChatCommands;
 
+/**
+ * Moves the player in the specific direction,
+ * if a destination is available
+ * @author Shane
+ */
+
 import cybermoo.Scene;
 import cybermoo.Handlers.SceneHandler;
 import cybermoo.ThreadedClient;
@@ -9,22 +15,8 @@ public class CommandMove implements Command {
     public void call(String[] arguments, ThreadedClient source) {
         if (arguments != null) {
             Scene curLocation = source.getPlayer().getScene();
-            String arg = arguments[0].toLowerCase();
-            String direction = "";
-            if (arg.equals("up")) {
-                direction = curLocation.getUp();
-            } else if (arg.equals("down")) {
-                direction = curLocation.getDown();
-            } else if (arg.equals("north")) {
-                direction = curLocation.getNorth();
-            } else if (arg.equals("east")) {
-                direction = curLocation.getEast();
-            } else if (arg.equals("south")) {
-                direction = curLocation.getSouth();
-            } else if (arg.equals("west")) {
-                direction = curLocation.getWest();
-            }
-            if (!direction.equals("")) {
+            String direction = curLocation.getDirection(arguments[0]);
+            if (direction != null && !direction.equals("")) {
                 for(int i = 0; i < SceneHandler.getInstance().getScenes().get(direction).getPlayers().size(); i++) {
                     SceneHandler.getInstance().getScenes().get(direction).getPlayers().get(i).getClient().sendText(source.getPlayer().getName() + " arrives at your location.");
                 }

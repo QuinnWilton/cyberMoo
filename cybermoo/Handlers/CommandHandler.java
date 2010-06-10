@@ -1,8 +1,15 @@
 package cybermoo.Handlers;
 
+/**
+ * Parses a player's input, calling the specified command
+ * with any arguments which have been included
+ * @author Shane
+ */
+
 import cybermoo.ChatCommands.Command;
-import cybermoo.ChatCommands.CommandBake;
+import cybermoo.ChatCommands.CommandCreateScene;
 import cybermoo.ChatCommands.CommandHelp;
+import cybermoo.ChatCommands.CommandLinkScene;
 import cybermoo.ChatCommands.CommandLogin;
 import cybermoo.ChatCommands.CommandLook;
 import cybermoo.ChatCommands.CommandMe;
@@ -10,17 +17,19 @@ import cybermoo.ChatCommands.CommandMove;
 import cybermoo.ChatCommands.CommandQuit;
 import cybermoo.ChatCommands.CommandRegister;
 import cybermoo.ChatCommands.CommandSay;
+import cybermoo.ChatCommands.CommandStatus;
 import cybermoo.ChatCommands.CommandWho;
 import cybermoo.ThreadedClient;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandHandler {
+
     private static CommandHandler instance;
     private Map<String, Command> commands;
 
     public static CommandHandler getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new CommandHandler();
         }
         return instance;
@@ -36,8 +45,10 @@ public class CommandHandler {
         commands.put("@quit", new CommandQuit());
         commands.put("move", new CommandMove());
         commands.put("look", new CommandLook());
-        commands.put("bake", new CommandBake());
         commands.put("me", new CommandMe());
+        commands.put("createscene", new CommandCreateScene());
+        commands.put("linkscene", new CommandLinkScene());
+        commands.put("status", new CommandStatus());
     }
 
     public void parse(String text, ThreadedClient source) {
@@ -45,12 +56,7 @@ public class CommandHandler {
         try {
             Command command = getCommands().get(tokens[0].toLowerCase());
             if (command != null) {
-                String[] arguments;
-                if (tokens.length > 1) {
-                    arguments = text.substring(text.indexOf(" ")).trim().split(" ");
-                } else {
-                    arguments = null;
-                }
+                String[] arguments = tokens.length > 1 ? text.substring(text.indexOf(" ")).trim().split(" ") : null;
                 if (command.isCleared(source)) {
                     command.call(arguments, source);
                 } else {

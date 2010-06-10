@@ -1,5 +1,10 @@
 package cybermoo.ChatCommands;
 
+/**
+ * Returns a listing of all online players
+ * @author Shane
+ */
+
 import cybermoo.Server;
 import cybermoo.ThreadedClient;
 

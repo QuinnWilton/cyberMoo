@@ -1,5 +1,11 @@
 package cybermoo;
 
+/**
+ * Acts as an interface between the client (a generic telnet client),
+ * and all of the server sided logic
+ * @author Shane
+ */
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;

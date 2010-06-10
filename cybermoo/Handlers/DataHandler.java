@@ -1,5 +1,11 @@
 package cybermoo.Handlers;
 
+/**
+ * Acts as an interface between the logic, and the data,
+ * loading and saving all objects to an external database
+ * @author Shane
+ */
+
 import com.google.gson.Gson;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -34,7 +40,7 @@ public class DataHandler {
         }
     }
 
-    public void saveObject(String path, Object obj, Boolean append) {
+    public void saveObject(String path, Object obj, boolean append) {
         try {
             PrintWriter fileOutput = new PrintWriter(new FileOutputStream(path, append));
             fileOutput.print(gson.toJson(obj));

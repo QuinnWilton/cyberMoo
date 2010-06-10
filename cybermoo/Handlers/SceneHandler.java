@@ -1,21 +1,22 @@
 package cybermoo.Handlers;
 
-import com.google.gson.Gson;
+/**
+ * Stores all currently loaded scnes, and
+ * allows access to them through a hash map
+ * @author Shane
+ */
+
 import cybermoo.Scene;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class SceneHandler {
 
     private static SceneHandler instance;
-    private final String sceneList = "data/Scenes.txt";
-    private Scanner fileInput;
-    private Gson gson;
+    private final File[] sceneList = new File("data/scenes").listFiles();
     private Map<String, Scene> scenes;
-    public static final String defaultStart = "Dark Room";
+    public static final String defaultStart = "Clone Arrangers";
 
     public static SceneHandler getInstance() {
         if (instance == null) {
@@ -25,19 +26,13 @@ public class SceneHandler {
     }
 
     public SceneHandler() {
-        try {
-            fileInput = new Scanner(new FileReader(sceneList));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        gson = new Gson();
         scenes = new HashMap<String, Scene>();
-        loadMaps();
+        loadScenes();
     }
 
-    private void loadMaps() {
-        while (fileInput.hasNextLine()) {
-            Scene scene = gson.fromJson(fileInput.nextLine(), Scene.class);
+    private void loadScenes() {
+        for (int i = 0; i < sceneList.length; i++) {
+            Scene scene = DataHandler.getInstance().loadObject(sceneList[i].getPath(), Scene.class);
             getScenes().put(scene.getName(), scene);
         }
     }

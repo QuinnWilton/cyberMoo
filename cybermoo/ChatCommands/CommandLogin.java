@@ -1,10 +1,16 @@
 package cybermoo.ChatCommands;
 
+/**
+ * Encrypts the input password using RSA encryption
+ * before comparing the input credentials to a database
+ * @author Shane
+ */
+
 import cybermoo.Handlers.DataHandler;
+import cybermoo.Handlers.HelperHandler;
 import cybermoo.Player;
 import cybermoo.ThreadedClient;
 import java.io.File;
-import java.security.MessageDigest;
 
 public class CommandLogin implements Command {
 
@@ -15,9 +21,9 @@ public class CommandLogin implements Command {
 
     public void call(String[] arguments, ThreadedClient source) {
         if (arguments != null && arguments.length == 2) {
-            if (new File(userList + "/" + arguments[0] + ".txt").exists()) {
-                String hash = toSHA(arguments[1]);
-                Player player = DataHandler.getInstance().loadObject(userList + arguments[0] + ".txt", Player.class);
+            if (new File(userList + "/" + arguments[0]).exists()) {
+                String hash = HelperHandler.toSHA(arguments[1]);
+                Player player = DataHandler.getInstance().loadObject(userList + arguments[0], Player.class);
                 if (hash.equals(player.getHash())) {
                     source.sendText("You have successfully logged in!\n");
                     player.setClient(source);
@@ -41,33 +47,5 @@ public class CommandLogin implements Command {
 
     public String getHelp() {
         return "login <Username> <Password>";
-    }
-
-    private String toSHA(String password) {
-        try {
-            MessageDigest m = MessageDigest.getInstance("SHA");
-            m.update(password.getBytes());
-            return convToHex(m.digest());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private String convToHex(byte[] data) {
-        StringBuilder buf = new StringBuilder();
-        for (int i = 0; i < data.length; i++) {
-            int halfbyte = (data[i] >>> 4) & 0x0F;
-            int two_halfs = 0;
-            do {
-                if ((0 <= halfbyte) && (halfbyte <= 9)) {
-                    buf.append((char) ('0' + halfbyte));
-                } else {
-                    buf.append((char) ('a' + (halfbyte - 10)));
-                }
-                halfbyte = data[i] & 0x0F;
-            } while (two_halfs++ < 1);
-        }
-        return buf.toString();
     }
 }

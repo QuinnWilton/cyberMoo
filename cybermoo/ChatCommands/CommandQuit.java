@@ -1,5 +1,10 @@
 package cybermoo.ChatCommands;
 
+/**
+ * Logs the player out, closing the socket, and cleaning up
+ * @author Shane
+ */
+
 import cybermoo.Server;
 import cybermoo.ThreadedClient;
 import java.io.IOException;

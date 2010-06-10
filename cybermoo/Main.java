@@ -1,6 +1,8 @@
 package cybermoo;
-
-import cybermoo.Handlers.DataHandler;
+/**
+ * Instantiates the server object, and begins listening for clients
+ * @author Shane
+ */
 
 public class Main {
 

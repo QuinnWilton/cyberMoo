@@ -1,7 +1,11 @@
 package cybermoo.ChatCommands;
 
+/**
+ * Returns the syntax and function of any command passed to it
+ * @author Shane
+ */
+
 import cybermoo.Handlers.CommandHandler;
-import cybermoo.Server;
 import cybermoo.ThreadedClient;
 import java.util.Iterator;
 
