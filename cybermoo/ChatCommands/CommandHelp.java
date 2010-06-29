@@ -9,6 +9,7 @@ import cybermoo.Handlers.CommandHandler;
 import cybermoo.ThreadedClient;
 import java.util.Iterator;
 
+@Name("help")
 public class CommandHelp implements Command {
 
     public void call(String[] arguments, ThreadedClient source) {

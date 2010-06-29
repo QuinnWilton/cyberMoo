@@ -12,6 +12,7 @@ import cybermoo.Player;
 import cybermoo.ThreadedClient;
 import java.io.File;
 
+@Name("login")
 public class CommandLogin implements Command {
 
     private final String userList = "data/users/";

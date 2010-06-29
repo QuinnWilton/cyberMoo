@@ -9,6 +9,7 @@ import cybermoo.Server;
 import cybermoo.ThreadedClient;
 import java.io.IOException;
 
+@Name("@quit")
 public class CommandQuit implements Command {
 
     public void call(String[] arguments, ThreadedClient source) {

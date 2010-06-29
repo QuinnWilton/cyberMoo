@@ -13,6 +13,7 @@ import cybermoo.Handlers.SceneHandler;
 import cybermoo.ThreadedClient;
 import java.io.File;
 
+@Name("register")
 public class CommandRegister implements Command {
 
     private final String userList = "data/users/";

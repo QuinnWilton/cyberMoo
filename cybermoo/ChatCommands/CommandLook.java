@@ -7,6 +7,7 @@ package cybermoo.ChatCommands;
 
 import cybermoo.ThreadedClient;
 
+@Name("look")
 public class CommandLook implements Command {
 
     public void call(String[] arguments, ThreadedClient source) {

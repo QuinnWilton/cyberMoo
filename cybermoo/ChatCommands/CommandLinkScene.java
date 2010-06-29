@@ -10,6 +10,7 @@ import cybermoo.Handlers.SceneHandler;
 import cybermoo.ThreadedClient;
 import java.util.regex.Pattern;
 
+@Name("linkscene")
 public class CommandLinkScene implements Command {
 
     public void call(String[] arguments, ThreadedClient source) {

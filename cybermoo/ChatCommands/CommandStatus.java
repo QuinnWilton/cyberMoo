@@ -9,6 +9,7 @@ import cybermoo.Player;
 import cybermoo.TextAttributes;
 import cybermoo.ThreadedClient;
 
+@Name("status")
 public class CommandStatus implements Command {
 
     public void call(String[] arguments, ThreadedClient source) {

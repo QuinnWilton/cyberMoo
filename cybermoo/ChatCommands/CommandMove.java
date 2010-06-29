@@ -10,6 +10,7 @@ import cybermoo.Scene;
 import cybermoo.Handlers.SceneHandler;
 import cybermoo.ThreadedClient;
 
+@Name("move")
 public class CommandMove implements Command {
 
     public void call(String[] arguments, ThreadedClient source) {

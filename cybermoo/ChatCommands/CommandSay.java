@@ -8,6 +8,7 @@ package cybermoo.ChatCommands;
 import cybermoo.Scene;
 import cybermoo.ThreadedClient;
 
+@Name(value="say", aliases={"\""})
 public class CommandSay implements Command {
 
     public void call(String[] arguments, ThreadedClient source) {

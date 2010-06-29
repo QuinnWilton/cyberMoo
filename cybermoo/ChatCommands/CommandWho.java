@@ -8,6 +8,7 @@ package cybermoo.ChatCommands;
 import cybermoo.Server;
 import cybermoo.ThreadedClient;
 
+@Name("who")
 public class CommandWho implements Command {
 
     public void call(String[] arguments, ThreadedClient source) {

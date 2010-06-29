@@ -12,6 +12,7 @@ import cybermoo.Scene;
 import cybermoo.ThreadedClient;
 import java.util.regex.Pattern;
 
+@Name("createscene")
 public class CommandCreateScene implements Command {
 
     public void call(String[] arguments, ThreadedClient source) {

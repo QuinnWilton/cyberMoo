@@ -9,6 +9,7 @@ package cybermoo.ChatCommands;
 import cybermoo.Scene;
 import cybermoo.ThreadedClient;
 
+@Name("me")
 public class CommandMe implements Command {
 
     public void call(String[] arguments, ThreadedClient source) {
