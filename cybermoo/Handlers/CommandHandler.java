@@ -19,7 +19,10 @@ import cybermoo.ChatCommands.CommandRegister;
 import cybermoo.ChatCommands.CommandSay;
 import cybermoo.ChatCommands.CommandStatus;
 import cybermoo.ChatCommands.CommandWho;
+import cybermoo.util.Annotations;
 import cybermoo.ThreadedClient;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,8 +39,8 @@ public class CommandHandler {
     }
 
     public CommandHandler() {
-        commands = new HashMap<String, Command>();
-        commands.put("who", new CommandWho());
+        this.commands = new HashMap<String, Command>();
+        this.loadCommand("cybermoo.ChatCommands.CommandWho");
         commands.put("say", new CommandSay());
         commands.put("register", new CommandRegister());
         commands.put("login", new CommandLogin());
@@ -82,5 +85,49 @@ public class CommandHandler {
      */
     public void setCommands(Map<String, Command> commands) {
         this.commands = commands;
+    }
+    
+    protected void loadCommand(String className) {
+        try {
+            // try to load the class the user entered(via configuration or so)
+            Class<?> cla = Class.forName(className);
+            
+            // now make sure it's a command
+            if(!cla.isInstance(Command.class)) {
+                // hmm.. no.. explode
+                throw new IllegalArgumentException("Entered class '" + className + "' does not implement the Command interface");
+            }
+            
+            // now let the other load command utility method handle that ;)
+            this.loadCommand((Class<? extends Command>) cla);
+        } catch(ClassNotFoundException exc) {
+            // err.. user entered nothing useful
+            throw new IllegalArgumentException("Entered class '" + className + "' does not exist");
+        }
+            
+    }
+    protected void loadCommand(Class<? extends Command> clas) {
+        // load the aliases for that class
+        String[] aliases = Annotations.extractAliases(clas);
+        
+        // create an instance of that command
+        Command cmd;
+        try {
+            Constructor<? extends Command> ctor = clas.getConstructor();
+            cmd = ctor.newInstance();
+        } catch(InvocationTargetException exc) {
+            throw new RuntimeException("Failed to load command '" + clas + "'", exc);
+        } catch(InstantiationException exc) {
+            throw new IllegalArgumentException("Failed to load command '" + clas + "'", exc);
+        } catch(IllegalAccessException exc) {
+            throw new RuntimeException("Failed to load command '" + clas + "'", exc);
+        } catch(NoSuchMethodException exc) {
+            throw new RuntimeException("Failed to load command '" + clas + "'", exc);
+        }
+        
+        // now add it under each alias
+        // TODO: don't just overwrite existing bindings
+        for(int i=0; i < aliases.length; i++)
+            this.commands.put(aliases[i], cmd);
     }
 }
