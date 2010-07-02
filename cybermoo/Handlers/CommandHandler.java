@@ -7,18 +7,6 @@ package cybermoo.Handlers;
  */
 
 import cybermoo.ChatCommands.Command;
-import cybermoo.ChatCommands.CommandCreateScene;
-import cybermoo.ChatCommands.CommandHelp;
-import cybermoo.ChatCommands.CommandLinkScene;
-import cybermoo.ChatCommands.CommandLogin;
-import cybermoo.ChatCommands.CommandLook;
-import cybermoo.ChatCommands.CommandMe;
-import cybermoo.ChatCommands.CommandMove;
-import cybermoo.ChatCommands.CommandQuit;
-import cybermoo.ChatCommands.CommandRegister;
-import cybermoo.ChatCommands.CommandSay;
-import cybermoo.ChatCommands.CommandStatus;
-import cybermoo.ChatCommands.CommandWho;
 import cybermoo.util.Annotations;
 import cybermoo.ThreadedClient;
 import java.lang.reflect.Constructor;
@@ -41,17 +29,17 @@ public class CommandHandler {
     public CommandHandler() {
         this.commands = new HashMap<String, Command>();
         this.loadCommand("cybermoo.ChatCommands.CommandWho");
-        commands.put("say", new CommandSay());
-        commands.put("register", new CommandRegister());
-        commands.put("login", new CommandLogin());
-        commands.put("help", new CommandHelp());
-        commands.put("@quit", new CommandQuit());
-        commands.put("move", new CommandMove());
-        commands.put("look", new CommandLook());
-        commands.put("me", new CommandMe());
-        commands.put("createscene", new CommandCreateScene());
-        commands.put("linkscene", new CommandLinkScene());
-        commands.put("status", new CommandStatus());
+        this.loadCommand("cybermoo.ChatCommands.CommandSay");
+        this.loadCommand("cybermoo.ChatCommands.CommandRegister");
+        this.loadCommand("cybermoo.ChatCommands.CommandLogin");
+        this.loadCommand("cybermoo.ChatCommands.CommandHelp");
+        this.loadCommand("cybermoo.ChatCommands.CommandQuit");
+        this.loadCommand("cybermoo.ChatCommands.CommandMove");
+        this.loadCommand("cybermoo.ChatCommands.CommandLook");
+        this.loadCommand("cybermoo.ChatCommands.CommandMe");
+        this.loadCommand("cybermoo.ChatCommands.CommandCreateScene");
+        this.loadCommand("cybermoo.ChatCommands.CommandLinkScene");
+        this.loadCommand("cybermoo.ChatCommands.CommandStatus");
     }
 
     public void parse(String text, ThreadedClient source) {
